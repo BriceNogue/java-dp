@@ -1,10 +1,12 @@
 package org.sebsy.grasps.daos;
 
 import org.sebsy.grasps.beans.Client;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ClientDao {
 
     private static Client[] clients = {new Client("1", true), new Client("2", true), new Client("3", false)};

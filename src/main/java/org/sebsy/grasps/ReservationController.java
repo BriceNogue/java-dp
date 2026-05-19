@@ -1,10 +1,12 @@
 package org.sebsy.grasps;
 
+import org.sebsy.grasps.Contracts.IClientService;
+import org.sebsy.grasps.Contracts.ITypeReservationService;
+import org.sebsy.grasps.Services.ClientService;
+import org.sebsy.grasps.Services.TypeReservationService;
 import org.sebsy.grasps.beans.Client;
 import org.sebsy.grasps.beans.Reservation;
 import org.sebsy.grasps.beans.TypeReservation;
-import org.sebsy.grasps.daos.ClientDao;
-import org.sebsy.grasps.daos.TypeReservationDao;
 
 import java.time.LocalDateTime;
 
@@ -15,16 +17,15 @@ import static org.sebsy.grasps.helpers.DateTimeHelper.toDate;
  */
 public class ReservationController {
 
+    /**
+     * Service permettant d'accéder au données des clients
+     */
+    private IClientService clientService = new ClientService();
 
     /**
-     * DAO permettant d'accéder à la table des clients
+     * Service permettant d'accéder au données des types de réservation
      */
-    private ClientDao clientDao = new ClientDao();
-
-    /**
-     * DAO permettant d'accéder à la table des types de réservation
-     */
-    private TypeReservationDao typeReservationDao = new TypeReservationDao();
+    private ITypeReservationService typeReservationService = new TypeReservationService();
 
     /**
      * Méthode qui créée une réservation pour un client à partir des informations transmises
@@ -44,10 +45,10 @@ public class ReservationController {
         LocalDateTime dateReservation = toDate(dateReservationStr);
 
         // 3) Extraction de la base de données des informations client
-        Client client = clientDao.extraireClient(identifiantClient);
+        Client client = clientService.extraireClient(identifiantClient);
 
         // 4) Extraction de la base de données des infos concernant le type de la réservation
-        TypeReservation type = typeReservationDao.extraireTypeReservation(typeReservation);
+        TypeReservation type = typeReservationService.extraireTypeReservation(typeReservation);
 
         // 5) Création de la réservation
         Reservation reservation = new Reservation(dateReservation, nbPlaces, client);
