@@ -7,17 +7,14 @@ import org.sebsy.grasps.daos.ClientDao;
 import org.sebsy.grasps.daos.TypeReservationDao;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import static org.sebsy.grasps.helpers.DateTimeHelper.toDate;
 
 /**
  * Controlleur qui prend en charge la gestion des réservations client
  */
 public class ReservationController {
 
-    /**
-     * formatter
-     */
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     /**
      * DAO permettant d'accéder à la table des clients
@@ -53,9 +50,7 @@ public class ReservationController {
         TypeReservation type = typeReservationDao.extraireTypeReservation(typeReservation);
 
         // 5) Création de la réservation
-        Reservation reservation = new Reservation(dateReservation);
-        reservation.setNbPlaces(nbPlaces);
-        reservation.setClient(client);
+        Reservation reservation = new Reservation(dateReservation, nbPlaces, client);
 
         // 6) Ajout de la réservation au client
         client.getReservations().add(reservation);
@@ -70,16 +65,5 @@ public class ReservationController {
             reservation.setTotal(total);
         }
         return reservation;
-    }
-
-    /**
-     * Transforme une date au format String en {@link LocalDateTime}
-     *
-     * @param dateStr date au format String
-     * @return LocalDateTime
-     */
-    private LocalDateTime toDate(String dateStr) {
-
-        return LocalDateTime.parse(dateStr, formatter);
     }
 }

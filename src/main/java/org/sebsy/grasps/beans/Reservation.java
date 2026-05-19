@@ -26,9 +26,11 @@ public class Reservation {
 
     }
 
-    public Reservation(LocalDateTime date) {
+    public Reservation(LocalDateTime date, int nbPlaces, Client client) {
         super();
         this.date = date;
+        this.nbPlaces = nbPlaces;
+        this.client = client;
     }
 
     /**
