@@ -10,6 +10,8 @@ public class DateTimeHelper {
      */
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
+    private DateTimeHelper(){}
+
     /**
      * Transforme une date au format String en {@link LocalDateTime}
      *
